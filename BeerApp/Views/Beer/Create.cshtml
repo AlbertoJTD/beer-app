@@ -1,0 +1,38 @@
+﻿@using BeerApp.Models.ViewModels
+@model BeerViewModel
+
+<h1>Crear cerveza</h1>
+
+<hr />
+
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<div class="form-group">
+				<label asp-for="Name" class="control-label"></label> @* Obtiene el nombre asignado en BeerViewModel *@
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="BrandId" class="control-label"></label>
+				<select asp-for="BrandId" class="form-select" asp-items="ViewBag.Brands"></select> @* Obtener informacion de ViewData["Brands"] *@
+
+				<span asp-validation-for="BrandId" class="text-danger"></span>
+			</div>
+
+			<div class="mt-2">
+				<input type="submit" value="Crear" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+@* Insertar partial en la seccion 'Scripts' del '_Layout.cshtml' *@
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
