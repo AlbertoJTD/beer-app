@@ -1,3 +1,4 @@
 .vs/
-BeerApp/bin/Debug/
-BeerApp/obj/Debug/
+bin/
+Debug/
+obj/
