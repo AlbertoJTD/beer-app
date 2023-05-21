@@ -1,5 +1,7 @@
 ﻿using BeerApp.Models;
+using BeerApp.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace BeerApp.Controllers
@@ -20,5 +22,29 @@ namespace BeerApp.Controllers
             // .ToListAsync() => devuelve una lista de objeyos del tipo Brands
             return View(await _context.Brands.ToListAsync());
         }
-    }
+
+		public IActionResult Create()
+		{
+			return View();
+		}
+
+        [HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(BrandViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var brand = new Brand()
+				{
+					Name = model.Name
+				};
+				_context.Add(brand);
+				await _context.SaveChangesAsync();
+
+				return RedirectToAction(nameof(Index)); // Retornar al metodo index
+			}
+
+			return View(model);
+		}
+	}
 }
